@@ -89,7 +89,7 @@ class RestfulClient(object):
         if domain:
             self.ARTICLEMETA_URL = domain
 
-    def _do_request(self, url, params=None, timeout=30, method='GET'):
+    def _do_request(self, url, params=None, timeout=60, method='GET'):
 
         request = requests.get
         params = params if params else {}
@@ -444,7 +444,7 @@ class RestfulClient(object):
     ):
 
         params = {
-            'limit': 100,
+            'limit': 1000,
             'fmt': fmt,
             'body': str(body).lower()
         }
@@ -465,7 +465,12 @@ class RestfulClient(object):
 
             while True:
                 url = urljoin(self.ARTICLEMETA_URL, self.ARTICLES_ENDPOINT)
-                articles = self._do_request(url, params=params, timeout=30)
+                articles = self._do_request(url, params=params, timeout=60)
+                
+                num=10
+                while articles is None and num > 0:
+                    articles = self._do_request(url, params=params, timeout=60)
+                    num = num - 1
 
                 if articles is None:
                     break
