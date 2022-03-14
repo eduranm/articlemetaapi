@@ -82,7 +82,7 @@ class RestfulClient(object):
     ISSUE_ENDPOINT = '/api/v1/issue'
     ISSUES_ENDPOINT = '/api/v1/issues'
     COLLECTION_ENDPOINT = '/api/v1/collection'
-    ATTEMPTS = 10
+    ATTEMPTS = 1
 
     def __init__(self, domain=None):
 
@@ -467,7 +467,7 @@ class RestfulClient(object):
                 url = urljoin(self.ARTICLEMETA_URL, self.ARTICLES_ENDPOINT)
                 articles = self._do_request(url, params=params, timeout=60)
                 
-                num=10
+                num=2
                 while articles is None and num > 0:
                     articles = self._do_request(url, params=params, timeout=60)
                     num = num - 1
